@@ -6,16 +6,17 @@ export const fetchFilms = (page, searchQuery) => async (dispatch, getState) => {
   const filmList = getState().films.films;
   dispatch(filmsActions.filmsFetch());
   if (searchQuery.startsWith("-")) {
-    // const response = await axios.get(
-    //   `http://127.0.0.1:8080/get_recommendation?user_id=${searchQuery.substring(1)}`,
-    //   // `http://127.0.0.1:8080/get_recommendation?user_id=228319880`,
-    // );
     const response = await axios.get(
-      `https://www.omdbapi.com/?apikey=${import.meta.env.VITE_OMDB_KEY}`,
-      {
-        params: { s: searchQuery, page },
-      }
+      `http://127.0.0.1:8080/get_recommendation?user_id=${searchQuery.substring(1)}`,
+      // `http://127.0.0.1:8080/get_recommendation?user_id=228319880`,
     );
+    // const response = await axios.get(
+    //   `https://www.omdbapi.com/?apikey=${import.meta.env.VITE_OMDB_KEY}`,
+    //   {
+    //     params: { s: searchQuery, page },
+    //   }
+    // );
+    console.log(response);
     if (response.data.Response) {
       dispatch(filmsActions.filmsFetchFailure(response.data.Response));
       return;
